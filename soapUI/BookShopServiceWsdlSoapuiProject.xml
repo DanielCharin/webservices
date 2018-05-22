@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="e27809fe-c445-4213-89c0-243027cec3b0" activeEnvironment="Default" name="BookShopService?wsdl" resourceRoot="" soapui-version="5.4.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="d864481e-8b7c-49c9-99e3-cbb8f9350b55" wsaVersion="NONE" name="BookShopBinding" type="wsdl" bindingName="{http://www.ttu.ee/idu0075/2015/ws/bookShop}BookShopBinding" soapVersion="1_1" anonymous="optional" definition="http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService?wsdl"><con:part><con:url>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService?wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown.-->
+<wsdl:definitions targetNamespace="http://www.ttu.ee/idu0075/2015/ws/bookShop" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/bookShop">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/bookShop" elementFormDefault="qualified">
+      <xs:complexType name="book">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="ISBN" type="tns:ISBNtype"/>
+          <xs:element name="title" type="xs:string"/>
+          <xs:element name="author" type="xs:string"/>
+          <xs:element name="publisher" type="xs:string"/>
+          <xs:element name="category" type="tns:categoryType"/>
+          <xs:element name="date" type="xs:date"/>
+          <xs:element name="length" type="xs:integer"/>
+          <xs:element name="bookReviewList" type="tns:bookReviewList"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="bookReview">
+        <xs:sequence>
+          <xs:element name="review" type="tns:review"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="bookReviewList">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="bookReview" type="tns:bookReview"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="ISBNtype">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="\d{1}-\d{5}-\d{3}-\d{1}|\d{1}-\d{3}-\d{5}-\d{1}|\d{1}-\d{2}-\d{6}-\d{1}"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="categoryType">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Business"/>
+          <xs:enumeration value="Kids"/>
+          <xs:enumeration value="Comics"/>
+          <xs:enumeration value="Cooking"/>
+          <xs:enumeration value="Education"/>
+          <xs:enumeration value="HealthFitness"/>
+          <xs:enumeration value="Sports"/>
+          <xs:enumeration value="Travel"/>
+          <xs:enumeration value="Other"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="review">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="nickName" type="xs:string"/>
+          <xs:element name="email" type="tns:emailType"/>
+          <xs:element name="vote" type="tns:voteType"/>
+          <xs:element name="comment" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="emailType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="voteType">
+        <xs:restriction base="xs:integer">
+          <xs:enumeration value="1"/>
+          <xs:enumeration value="2"/>
+          <xs:enumeration value="3"/>
+          <xs:enumeration value="4"/>
+          <xs:enumeration value="5"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="hasRelatedReviewsType">
+        <xs:restriction base="xs:string">
+          <xs:pattern value="yes|no"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <!--Response&Request messages-->
+      <xs:element name="getBookRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="id" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getBookResponse" type="tns:book"/>
+      <xs:element name="addBookRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="ISBN" type="tns:ISBNtype"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="author" type="xs:string"/>
+            <xs:element name="publisher" type="xs:string"/>
+            <xs:element name="category" type="tns:categoryType"/>
+            <xs:element name="date" type="xs:date"/>
+            <xs:element name="length" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addBookResponse" type="tns:book"/>
+      <xs:element name="getBookListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="category" type="tns:categoryType"/>
+            <xs:element name="dateFrom" type="xs:date"/>
+            <xs:element name="dateTo" type="xs:date"/>
+            <xs:element minOccurs="0" name="hasRelatedReviews" type="tns:hasRelatedReviewsType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getBookListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="book" type="tns:book"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getReviewRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="id" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getReviewResponse" type="tns:review"/>
+      <xs:element name="addReviewRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="nickName" type="xs:string"/>
+            <xs:element name="email" type="tns:emailType"/>
+            <xs:element name="vote" type="tns:voteType"/>
+            <xs:element name="comment" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addReviewResponse" type="tns:review"/>
+      <xs:element name="getReviewListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getReviewListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="review" type="tns:review"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getBookReviewListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="bookId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getBookReviewListResponse" type="tns:bookReviewList"/>
+      <xs:element name="addBookReviewRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="bookId" type="xs:integer"/>
+            <xs:element name="reviewId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addBookReviewResponse" type="tns:bookReview"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getBookMessageRequest">
+    <wsdl:part name="parameter" element="tns:getBookRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getBookMessageResponse">
+    <wsdl:part name="parameter" element="tns:getBookResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addBookMessageRequest">
+    <wsdl:part name="parameter" element="tns:addBookRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addBookMessageResponse">
+    <wsdl:part name="parameter" element="tns:addBookResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getBookListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getBookListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getBookListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getBookListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getReviewMessageRequest">
+    <wsdl:part name="parameter" element="tns:getReviewRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getReviewMessageResponse">
+    <wsdl:part name="parameter" element="tns:getReviewResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addReviewMessageRequest">
+    <wsdl:part name="parameter" element="tns:addReviewRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addReviewMessageResponse">
+    <wsdl:part name="parameter" element="tns:addReviewResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getReviewListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getReviewListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getReviewListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getReviewListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getBookReviewListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getBookReviewListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getBookReviewListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getBookReviewListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addBookReviewMessageRequest">
+    <wsdl:part name="parameter" element="tns:addBookReviewRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addBookReviewMessageResponse">
+    <wsdl:part name="parameter" element="tns:addBookReviewResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="BookShopPortType">
+    <wsdl:operation name="getBook">
+      <wsdl:input message="tns:getBookMessageRequest"/>
+      <wsdl:output message="tns:getBookMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <wsdl:input message="tns:addBookMessageRequest"/>
+      <wsdl:output message="tns:addBookMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getBookList">
+      <wsdl:input message="tns:getBookListMessageRequest"/>
+      <wsdl:output message="tns:getBookListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getReview">
+      <wsdl:input message="tns:getReviewMessageRequest"/>
+      <wsdl:output message="tns:getReviewMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addReview">
+      <wsdl:input message="tns:addReviewMessageRequest"/>
+      <wsdl:output message="tns:addReviewMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getReviewList">
+      <wsdl:input message="tns:getReviewListMessageRequest"/>
+      <wsdl:output message="tns:getReviewListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getBookReviewList">
+      <wsdl:input message="tns:getBookReviewListMessageRequest"/>
+      <wsdl:output message="tns:getBookReviewListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addBookReview">
+      <wsdl:input message="tns:addBookReviewMessageRequest"/>
+      <wsdl:output message="tns:addBookReviewMessageResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BookShopBinding" type="tns:BookShopPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getBook">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBookList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReview">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addReview">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getReviewList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBookReviewList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addBookReview">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BookShopService">
+    <wsdl:port name="BookShopPort" binding="tns:BookShopBinding">
+      <soap:address location="http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint></con:endpoints><con:operation id="2ccd11a7-7b72-4215-a01e-3e349b4e1bd1" isOneWay="false" action="" name="addBook" bindingOperationName="addBook" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="20091535-71ae-43c5-b949-d22e0ebbf82e" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:addBookRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:ISBN>0-13-235088-2</book:ISBN>\r
+         <book:title>Clean Code</book:title>\r
+         <book:author>Robert C. Martin</book:author>\r
+         <book:publisher>Robert C. Martin Series</book:publisher>\r
+         <book:category>Education</book:category>\r
+         <book:date>2008-08-11</book:date>\r
+         <book:length>434</book:length>\r
+      </book:addBookRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/addBookRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="a808cb20-daf0-473a-b9f1-4ddf9321c529" isOneWay="false" action="" name="addBookReview" bindingOperationName="addBookReview" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="10a9c296-e727-4d5f-8902-4510da411cce" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:addBookReviewRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:bookId>1</book:bookId>\r
+         <book:reviewId>1</book:reviewId>\r
+      </book:addBookReviewRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/addBookReviewRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="12b00fb7-938e-45e6-bab1-88ccf52ec5bf" isOneWay="false" action="" name="addReview" bindingOperationName="addReview" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="713d6d0a-242b-45ad-b584-29da540bd3fa" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:addReviewRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:nickName>hitman</book:nickName>\r
+         <book:email>hitman@yahoo.com</book:email>\r
+         <book:vote>4</book:vote>\r
+         <book:comment>Cool book to spend free time</book:comment>\r
+      </book:addReviewRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/addReviewRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="9924a643-14f6-4498-b298-84499d78a0a9" isOneWay="false" action="" name="getBook" bindingOperationName="getBook" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="087309af-a222-4b0c-ad7a-cc1566acc719" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getBookRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:id>1</book:id>\r
+      </book:getBookRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getBookRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="34b792a8-939f-425c-9d1a-ff47ff4c2f97" isOneWay="false" action="" name="getBookList" bindingOperationName="getBookList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="f8f08b85-7bd9-4d31-858d-8dc1bbe8f818" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <book:getBookListRequest>
+         <book:token>salajane</book:token>
+         <book:category>Education</book:category>
+         <book:dateFrom>2000-10-10</book:dateFrom>
+         <book:dateTo>2012-10-10</book:dateTo>
+         <!--Optional:-->
+         <book:hasRelatedReviews>yes</book:hasRelatedReviews>
+      </book:getBookListRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getBookListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="dbcb84d0-0074-4179-9948-2637d17ce5ae" isOneWay="false" action="" name="getBookReviewList" bindingOperationName="getBookReviewList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="351a5b89-6790-40cc-aed0-48fed8f19d5c" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getBookReviewListRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:bookId>1</book:bookId>\r
+      </book:getBookReviewListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getBookReviewListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="dba2e5ad-c72c-465b-a362-eff7bafa1105" isOneWay="false" action="" name="getReview" bindingOperationName="getReview" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6fe5e9e9-7379-4cb4-9a0c-495304ab6194" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getReviewRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:id>1</book:id>\r
+      </book:getReviewRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getReviewRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="59c7c419-bb77-41d8-92d5-85371c771025" isOneWay="false" action="" name="getReviewList" bindingOperationName="getReviewList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="d33be7ae-094c-496d-9f39-095d366a035a" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getReviewListRequest>\r
+         <book:token>salajane</book:token>\r
+      </book:getReviewListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getReviewListRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="01828701-7d07-4c46-aeb6-e491921abb09" name="BookShopBindingTestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="b45e266d-dcf1-4f39-8284-962903b486ac" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addBook TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="1d0bcdc9-3d32-4d81-aaee-8efcaf8c674b" name="addBook"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookShopBinding</con:interface><con:operation>addBook</con:operation><con:request name="addBook" id="59cbb5bc-1ffd-439e-be78-098d7fd8e01d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:addBookRequest>\r
+         <book:token>salajane</book:token>
+         <book:ISBN>0-13-235088-2</book:ISBN>
+         <book:title>Test Driven Development</book:title>
+         <book:author>Kent Beck</book:author>
+         <book:publisher>Addison-Wesley Professional</book:publisher>
+         <book:category>Education</book:category>
+         <book:date>2002-01-01</book:date>
+         <book:length>216</book:length>
+      </book:addBookRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="9809c399-6e07-4a31-9891-cbaeb9ece001" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="3930dbd6-e7f7-4d56-b4b1-96582470b998" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/bookShop';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:length</path><content>216</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="SOAP Response" id="495d79b0-15f5-4ffa-9538-34af37af60ad" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/addBookRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="fcb8d642-83ed-482e-b3b7-65e29b8a906f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addBookReview TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="0a463e28-681a-453d-837f-df7df5556632" name="addBookReview"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookShopBinding</con:interface><con:operation>addBookReview</con:operation><con:request name="addBookReview" id="6edcfe3d-b89b-45e7-b53e-31fc42b8ef51"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:addBookReviewRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:bookId>1</book:bookId>\r
+         <book:reviewId>1</book:reviewId>\r
+      </book:addBookReviewRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="7e927c1b-2c3c-4cce-9243-4bbb7fe7508f" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="4e68fc08-c8e2-47cf-8c89-4b1f32171234" name="Contains"><con:configuration><token>&lt;id>1&lt;/id></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="SOAP Response" id="836c7d6b-c630-4d6b-8461-f4e914b91f04" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/addBookReviewRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="f97706d8-a565-4da5-9bdb-027cf9294509" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addReview TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="e0b2dfea-978f-4c34-aa89-1c32e2e8ba7e" name="addReview"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookShopBinding</con:interface><con:operation>addReview</con:operation><con:request name="addReview" id="f90493cf-3b55-4cf7-b2fc-d761ef4f2b13"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:addReviewRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:nickName>TestNickname</book:nickName>\r
+         <book:email>test@test.com</book:email>\r
+         <book:vote>2</book:vote>\r
+         <book:comment>Testing addReview</book:comment>\r
+      </book:addReviewRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="aba11a94-0ae8-4e0d-8501-8965106778a6" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="f11d8177-71a8-4876-a0f8-252bbdf708ea" name="XPath Match"><con:configuration><path>declare namespace soap='http://schemas.xmlsoap.org/soap/envelope/';
+declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/bookShop';
+
+//ns1:email</path><content>test@test.com</content><allowWildcards>false</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="SOAP Response" id="9dae1e40-f94b-41c5-998c-3c6b31d9c21b" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/addReviewRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="72f3c577-b4e6-48a5-9a1b-7d728da25a6f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getBook TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="f0cc2250-c5fa-484f-a62d-bfca6f8dad7c" name="getBook"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookShopBinding</con:interface><con:operation>getBook</con:operation><con:request name="getBook" id="bdf3313f-afbd-4269-bad0-96ad43ebcda6"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getBookRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:id>1</book:id>\r
+      </book:getBookRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="a5a7fe74-3021-41a3-bd5f-6211979b9f14" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="01ebeaae-b116-4930-8735-0ee291b098c8" name="Contains"><con:configuration><token>&lt;id>1&lt;/id></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="SOAP Response" id="d673cb80-52b5-4645-86ee-01fda449a149" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getBookRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d17b13e9-2238-490f-9c7f-b4582ec644e0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getBookList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" name="getBookList" id="2bb315bf-9934-4889-8f8a-868890c22931"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookShopBinding</con:interface><con:operation>getBookList</con:operation><con:request name="getBookList" id="7c1eb6cf-d004-450a-b1d4-de7535b1144e"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getBookListRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:category>Education</book:category>\r
+         <book:dateFrom>2000-10-10</book:dateFrom>\r
+         <book:dateTo>2012-10-10</book:dateTo>\r
+         <!--Optional:-->
+         <book:hasRelatedReviews>yes</book:hasRelatedReviews>
+      </book:getBookListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="f9ba76d4-5f30-428a-bf24-a6f655699055"/><con:assertion type="Schema Compliance" id="25b6ab05-a006-4ac8-b7db-ec913d2f966a" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="c08e9b0f-5d28-4a5b-85a9-6c4897da175c" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/bookShop';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:title</path><content>*</content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="182dbe4f-42cb-4e3f-ae26-241a9002870d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getBookReviewList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="0c09c1fa-0b79-41de-a2e0-5ca4eb383cc7" name="getBookReviewList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookShopBinding</con:interface><con:operation>getBookReviewList</con:operation><con:request name="getBookReviewList" id="5d0d76ee-dc96-4c31-9019-60df74c1833d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getBookReviewListRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:bookId>1</book:bookId>\r
+      </book:getBookReviewListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="f320197b-e485-4d6d-b937-259f55e401d0" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="cb0ba73e-eac8-4fac-bc81-aaf984579987" name="Contains"><con:configuration><token>&lt;review></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="SOAP Response" id="674c18e5-487a-43e3-8d11-1a02bc3bc3d8" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getBookReviewListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="e3c95933-d64d-4dee-9ed0-1b3a0d060954" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getReview TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="c6676721-0fff-4699-99c4-1ee3719415bd" name="getReview"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookShopBinding</con:interface><con:operation>getReview</con:operation><con:request name="getReview" id="e065a2fc-24d6-469d-aee8-c09ece696f65"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getReviewRequest>\r
+         <book:token>salajane</book:token>\r
+         <book:id>1</book:id>\r
+      </book:getReviewRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="1531821c-1c76-4907-9d99-44f014060974" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="XPath Match" id="746c8127-eefe-4180-8a00-e979b326458b" name="XPath Match"><con:configuration><path>declare namespace ns1='http://www.ttu.ee/idu0075/2015/ws/bookShop';
+declare namespace S='http://schemas.xmlsoap.org/soap/envelope/';
+//ns1:getReviewResponse</path><content><![CDATA[<getReviewResponse xmlns="http://www.ttu.ee/idu0075/2015/ws/bookShop">
+  <id>*</id>
+  <nickName>*</nickName>
+  <email>*</email>
+  <vote>*</vote>
+  <comment>*</comment>
+</getReviewResponse>]]></content><allowWildcards>true</allowWildcards><ignoreNamspaceDifferences>false</ignoreNamspaceDifferences><ignoreComments>false</ignoreComments></con:configuration></con:assertion><con:assertion type="SOAP Response" id="d37a3880-4588-4e04-a3e2-703f65a89e5f" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getReviewRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="c943685e-4ae2-4d93-a8bf-c576e1956f41" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getReviewList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="b7bc415a-396b-4171-a041-e4374f469536" name="getReviewList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>BookShopBinding</con:interface><con:operation>getReviewList</con:operation><con:request name="getReviewList" id="975e21ef-c0f0-4181-acd7-518c19436f56"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:book="http://www.ttu.ee/idu0075/2015/ws/bookShop">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <book:getReviewListRequest>\r
+         <book:token>salajane</book:token>\r
+      </book:getReviewListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="b0d81105-94f7-4ca9-b69d-243734b8a125" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="98c59ce6-da3b-4e6b-a9cd-dc059ea38d49" name="Contains"><con:configuration><token>&lt;id>1&lt;/id></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="SOAP Response" id="26e3d998-4929-4a31-9e01-7d0ed3a75241" name="SOAP Response"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/bookShop/BookShopPortType/getReviewListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>
