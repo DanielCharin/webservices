@@ -39,24 +39,6 @@ public class ReviewsResource {
      */
     public ReviewsResource() {
     }
-
-    /**
-     * Retrieves representation of an instance of mainpackage.ReviewsResource
-     * @return an instance of ee.ttu.idu0075._2015.ws.bookshop.Review
-     */
-    @GET
-    public String getJson() {
-        return "<h1>LOLOLO</h1>";
-    }
-
-    /**
-     * PUT method for updating or creating an instance of ReviewsResource
-     * @param content representation for the resource
-     */
-    @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(Review content) {
-    }
     
     @GET
     @Produces("application/json")
