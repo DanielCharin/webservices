@@ -1,0 +1,327 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/bookShop" targetNamespace="http://www.ttu.ee/idu0075/2015/ws/bookShop">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/bookShop" elementFormDefault="qualified">
+			<xs:complexType name="book">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="ISBN" type="tns:ISBNtype"/>
+					<xs:element name="title" type="xs:string"/>
+					<xs:element name="author" type="xs:string"/>
+					<xs:element name="publisher" type="xs:string"/>
+					<xs:element name="category" type="tns:categoryType"/>
+					<xs:element name="date" type="xs:date"/>
+					<xs:element name="length" type="xs:integer"/>
+					<xs:element name="bookReviewList" type="tns:bookReviewList"/>
+				</xs:sequence>
+			</xs:complexType>		
+			<xs:complexType name="bookReview">
+				<xs:sequence>
+					<xs:element name="review" type="tns:review"/>
+				</xs:sequence>
+			</xs:complexType>		
+			<xs:complexType name="bookReviewList">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="bookReview" type="tns:bookReview"/>
+				</xs:sequence>
+			</xs:complexType>		
+			<xs:simpleType name="ISBNtype">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="\d{1}-\d{5}-\d{3}-\d{1}|\d{1}-\d{3}-\d{5}-\d{1}|\d{1}-\d{2}-\d{6}-\d{1}"/>           
+				</xs:restriction>
+			</xs:simpleType>			
+			<xs:simpleType name="categoryType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Business"/>
+					<xs:enumeration value="Kids"/>
+					<xs:enumeration value="Comics"/>
+					<xs:enumeration value="Cooking"/>
+					<xs:enumeration value="Education"/>
+					<xs:enumeration value="HealthFitness"/>
+					<xs:enumeration value="Sports"/>
+					<xs:enumeration value="Travel"/>
+					<xs:enumeration value="Other"/>
+				</xs:restriction>
+			</xs:simpleType>		
+			<xs:complexType name="review">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="nickName" type="xs:string"/>
+					<xs:element name="email" type="tns:emailType"/>
+					<xs:element name="vote" type="tns:voteType"/>
+					<xs:element name="comment" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>	
+			<xs:simpleType name="emailType">
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[^@]+@[^\.]+\..+"/>
+				</xs:restriction>
+			</xs:simpleType> 
+			<xs:simpleType name="voteType">
+				<xs:restriction base="xs:integer">
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="4"/>
+					<xs:enumeration value="5"/>
+				</xs:restriction>
+			</xs:simpleType> 		
+                        <xs:simpleType name="hasRelatedReviewsType">
+                            <xs:restriction base="xs:string">
+                              <xs:pattern value="yes|no"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+			<!--Response&Request messages-->
+			<xs:element name="getBookRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBookResponse" type="tns:book"/>
+			<xs:element name="addBookRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="ISBN" type="tns:ISBNtype"/>
+						<xs:element name="title" type="xs:string"/>
+						<xs:element name="author" type="xs:string"/>
+						<xs:element name="publisher" type="xs:string"/>
+						<xs:element name="category" type="tns:categoryType"/>
+						<xs:element name="date" type="xs:date"/>
+						<xs:element name="length" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addBookResponse" type="tns:book"/>
+			<xs:element name="getBookListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="category" type="tns:categoryType"/>
+                                                <xs:element name="dateFrom" type="xs:date"/>
+                                                <xs:element name="dateTo" type="xs:date"/>
+                                                <xs:element minOccurs="0" name="hasRelatedReviews" type="tns:hasRelatedReviewsType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBookListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="book" type="tns:book"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>		
+			<xs:element name="getReviewRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getReviewResponse" type="tns:review"/>
+			<xs:element name="addReviewRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="nickName" type="xs:string"/>
+						<xs:element name="email" type="tns:emailType"/>
+						<xs:element name="vote" type="tns:voteType"/>
+						<xs:element name="comment" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addReviewResponse" type="tns:review"/>
+			<xs:element name="getReviewListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getReviewListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="review" type="tns:review"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBookReviewListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="bookId" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBookReviewListResponse" type="tns:bookReviewList"/>
+			
+			<xs:element name="addBookReviewRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="bookId" type="xs:integer"/>
+						<xs:element name="reviewId" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addBookReviewResponse" type="tns:bookReview"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getBookMessageRequest">
+		<wsdl:part name="parameter" element="tns:getBookRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getBookMessageResponse">
+		<wsdl:part name="parameter" element="tns:getBookResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addBookMessageRequest">
+		<wsdl:part name="parameter" element="tns:addBookRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addBookMessageResponse">
+		<wsdl:part name="parameter" element="tns:addBookResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getBookListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getBookListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getBookListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getBookListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getReviewMessageRequest">
+		<wsdl:part name="parameter" element="tns:getReviewRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getReviewMessageResponse">
+		<wsdl:part name="parameter" element="tns:getReviewResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addReviewMessageRequest">
+		<wsdl:part name="parameter" element="tns:addReviewRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addReviewMessageResponse">
+		<wsdl:part name="parameter" element="tns:addReviewResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getReviewListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getReviewListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getReviewListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getReviewListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getBookReviewListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getBookReviewListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getBookReviewListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getBookReviewListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addBookReviewMessageRequest">
+		<wsdl:part name="parameter" element="tns:addBookReviewRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addBookReviewMessageResponse">
+		<wsdl:part name="parameter" element="tns:addBookReviewResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="BookShopPortType">
+		<wsdl:operation name="getBook">
+			<wsdl:input message="tns:getBookMessageRequest"/>
+			<wsdl:output message="tns:getBookMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addBook">
+			<wsdl:input message="tns:addBookMessageRequest"/>
+			<wsdl:output message="tns:addBookMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getBookList">
+			<wsdl:input message="tns:getBookListMessageRequest"/>
+			<wsdl:output message="tns:getBookListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getReview">
+			<wsdl:input message="tns:getReviewMessageRequest"/>
+			<wsdl:output message="tns:getReviewMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addReview">
+			<wsdl:input message="tns:addReviewMessageRequest"/>
+			<wsdl:output message="tns:addReviewMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getReviewList">
+			<wsdl:input message="tns:getReviewListMessageRequest"/>
+			<wsdl:output message="tns:getReviewListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getBookReviewList">
+			<wsdl:input message="tns:getBookReviewListMessageRequest"/>
+			<wsdl:output message="tns:getBookReviewListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addBookReview">
+			<wsdl:input message="tns:addBookReviewMessageRequest"/>
+			<wsdl:output message="tns:addBookReviewMessageResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BookShopBinding" type="tns:BookShopPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getBook">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addBook">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBookList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getReview">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addReview">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getReviewList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getBookReviewList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addBookReview">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="BookShopService">
+		<wsdl:port name="BookShopPort" binding="tns:BookShopBinding">
+			<soap:address location="http://desktop-0kgl78o:8080/BookShopWebApplication/BookShopService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
